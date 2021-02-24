@@ -1,0 +1,74 @@
+/* AUTHOR: Cameron Cruz
+ * COURSE: CPT 187
+ * PURPOSE: Manage the work behind the writing of orders.
+ * CREATE DATE: 2/18/2021
+ */
+
+package edu.cpt187.cruz.exercise6;
+
+import java.io.PrintWriter;
+import java.io.FileWriter;
+import java.io.IOException;
+
+public class WriteOrder 
+{
+	//declare and initialize non-constant class attribute
+	private boolean fileFoundFlag = false;
+	private String masterFileName = "";
+	private int recordCount = 0;
+	
+	//WriteOrder class constructor
+	public WriteOrder(String borrowedFileName)
+	{
+		masterFileName = borrowedFileName;
+	}//END of WriteOrder class constructor
+	
+	//SETTERS**********
+	
+	//writes one order
+	public void setWriteOrder(int borrowedItemID, String borrowedItemName, double borrowedItemPrice,
+			int borrowedQuantity, double borrowedOrderCost)
+	{
+		try
+		{
+			//opens file
+			PrintWriter filePW = new PrintWriter(new FileWriter(masterFileName, true));
+			filePW.printf("%n%d\t%s\t%f\t%d\t%f", borrowedItemID, borrowedItemName, borrowedItemPrice, borrowedQuantity, borrowedOrderCost);
+
+			//sets flag to found
+			fileFoundFlag = true;
+			
+			//increments recordCount
+			recordCount++;
+			
+			//closes file
+			filePW.close();
+		}//END of try
+		catch(IOException ex)
+		{
+			//sets flag to not found
+			fileFoundFlag = false;
+		}//END of catch	
+	}//END of setWriteOrder
+	
+	//GETTERS**********
+	
+	//returns file found flag
+	public boolean getFileFoundFlag()
+	{
+		return fileFoundFlag;
+	}//END of getFileFoundFlag
+	
+	//returns file name
+	public String getFileName()
+	{
+		return masterFileName;
+	}//END of getFileName
+	
+	//returns recordCount
+	public int getRecordCount()
+	{
+		return recordCount;
+	}//END of getRecordCount
+	
+}//END of WriteOrder Class
